@@ -4,22 +4,24 @@ import { getPokemonsApi, getPokemonDatailsByUrlApi } from "../api/pokemon";
 import PokemoList from "../components/PokemonList";
 
 const Pokedex = () => {
-  const [ pokemons, setPokemons ] = useState([]);
+  const [pokemons, setPokemons] = useState([]);
+  const [nextUrl, setNextUrl] = useState(null);
 
   useEffect(() => {
-    ( async () => {
-      await logPokemon();
+    (async () => {
+      await loadPokemon();
     })()
   }, []);
-  
-  const logPokemon = async () => {
+
+  const loadPokemon = async () => {
     try {
-      const response = await getPokemonsApi();
-      
+      const response = await getPokemonsApi(nextUrl);
+      setNextUrl(response.next);
+
       const pokemonArray = [];
-      for await (const pokemon of response.results){
+      for await (const pokemon of response.results) {
         const pokemonDetails = await getPokemonDatailsByUrlApi(pokemon.url);
-        
+
         pokemonArray.push({
           id: pokemonDetails.id,
           name: pokemonDetails.name,
@@ -30,16 +32,19 @@ const Pokedex = () => {
       }
 
       setPokemons([...pokemons, ...pokemonArray])
-      console.log(pokemons)
 
     } catch (error) {
       console.log(error);
     }
   };
 
-  return(
+  return (
     <SafeAreaView>
-      <PokemoList pokemons={pokemons} />
+      <PokemoList
+        pokemons={pokemons}
+        loadPokemons={loadPokemon}
+        isNext={nextUrl}
+      />
     </SafeAreaView>
   );
 }
