@@ -5,10 +5,18 @@ import Pokemon from '../screens/Pokemon';
 const Stack = createStackNavigator();
 
 const PokedexNavigation = () => {
-  return(
+  return (
     <Stack.Navigator>
-      <Stack.Screen name="Pokedex" component={Pokedex} options={{title: "", headerTransparent: true }} />
-      <Stack.Screen name="Pokemon" component={Pokemon} />
+      <Stack.Screen
+        name="Pokedex"
+        component={Pokedex}
+        options={{ title: "", headerTransparent: true }}
+      />
+      <Stack.Screen
+        name="Pokemon"
+        component={Pokemon}
+        options={{ title: "", headerTransparent: true }}
+      />
     </Stack.Navigator>
   )
 };
