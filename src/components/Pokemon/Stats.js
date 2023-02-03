@@ -4,9 +4,10 @@ import { map, capitalize } from 'lodash';
 const Stats = ({ stats }) => {
 
   const barStyles = (num) => {
+    const color = num > 49 ? "#00ac17" : "#ff3e3e";
     return {
-      backgroundColor: '#ff3e3e',
-      with: `${num}%`,
+      backgroundColor: color,
+      width: `${num}%`,
     };
   };
 
@@ -63,14 +64,12 @@ const styles = StyleSheet.create({
   },
   bgBar: {
     backgroundColor: '#dedede',
-    width: '80%',
+    width: '88%',
     height: 5,
     borderRadius: 20,
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   bar: {
-    backgroundColor: 'red',
-    width: '100%',
     height: 5,
     borderRadius: 20,
   }
