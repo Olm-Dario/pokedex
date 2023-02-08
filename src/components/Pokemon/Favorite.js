@@ -1,11 +1,12 @@
 import { View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { addPokemonFavoriteApi, getPokemonFavoriteApi } from '../../api/favorite';
 
 
 const Favorite = ({ id }) => {
 
-  const addFavorite = () => {
-    console.log('Añadir a favorito', id);
+  const addFavorite = async () => {
+    await addPokemonFavoriteApi(id);
   };
 
   return (
