@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { addPokemonFavoriteApi, isPokemonFavoriteApi } from '../../api/favorite';
@@ -8,6 +7,7 @@ import { addPokemonFavoriteApi, isPokemonFavoriteApi } from '../../api/favorite'
 const Favorite = ({ id }) => {
 
   const [isFavorite, setIsFavorite] = useState(undefined);
+  const [reloadCheck, setReloadCheck] = useState(false);
   const Icon = isFavorite ? FontAwesome : FontAwesome5;
 
   useEffect(() => {
@@ -19,11 +19,19 @@ const Favorite = ({ id }) => {
         setIsFavorite(false);
       }
     })();
-  }, [id, isFavorite]);
+  }, [id, reloadCheck]);
 
+  const onReloadCheckFavorite = () => {
+    setReloadCheck(prev => !prev);
+  }
 
   const addFavorite = async () => {
-    await addPokemonFavoriteApi(id);
+    try {
+      await addPokemonFavoriteApi(id);
+      onReloadCheckFavorite();
+    } catch (error) {
+      throw error
+    }
   };
 
   const removeFavorite = () => {
